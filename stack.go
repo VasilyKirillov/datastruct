@@ -4,9 +4,9 @@ import (
 	"fmt"
 )
 
-type Stack []interface{}
+type stack []interface{}
 
-func New(elems ...interface{}) Stack {
+func NewStack(elems ...interface{}) stack {
 	if elems == nil {
 		var s []interface{}
 		return s
@@ -16,7 +16,7 @@ func New(elems ...interface{}) Stack {
 	return s
 }
 
-func (s *Stack) Pop() interface{} {
+func (s *stack) Pop() interface{} {
 	size := len(*s) - 1
 	elem := (*s)[size]
 	(*s)[size] = nil
@@ -24,19 +24,24 @@ func (s *Stack) Pop() interface{} {
 	return elem
 }
 
-func (s *Stack) Push(elem interface{}) {
+func (s *stack) Push(elem interface{}) {
 	*s = append(*s, elem)
 }
 
-func (s Stack) IsEmpty() bool {
-	return len(s) == 0
+func (s *stack) IsEmpty() bool {
+	return len(*s) == 0
 }
 
-func (s Stack) String() string {
+func (s *stack) Size() int {
+	return len(*s)
+}
+
+func (s stack) String() string {
+	size := s.Size()
 	var res string = "["
 	for i, el := range s {
 		res += fmt.Sprint(el)
-		if i < len(s)-1 {
+		if i < size-1 {
 			res += ","
 		}
 	}
